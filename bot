@@ -1,0 +1,54 @@
+const Discord = require("discord.js");
+const { prefix, token } = require("./config.json");
+const client = new Discord.Client();
+
+client.once("ready", () => {
+  console.log("Ready!");
+});
+
+client.on("message", (message) => {
+  if (message.member.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"]))
+    if (message.content.startsWith(`${prefix}kick`)) {
+      //console.log(message.content);
+
+      //message.channel.send("kick");
+
+      let member = message.mentions.members.first();
+      member.kick().then((member) => {
+        message.channel.send(
+          ":wave:" + member.displayName + " has been kicked"
+        );
+      });
+    }
+});
+
+client.on("message", (message) => {
+  if (message.member.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"]))
+    if (message.content.startsWith(`${prefix}ban`)) {
+      //console.log(message.content);
+
+      //message.channel.send("ban");
+
+      let member = message.mentions.members.first();
+      member.ban().then((member) => {
+        message.channel.send(
+          ":clown:" +
+            member.displayName +
+            " has been banned from the northern lands"
+        );
+      });
+    }
+});
+
+client.on('message', message => {
+  if(message.author.bot)
+  return;
+
+  if(message.content.toLowerCase() === 'moin')
+  message.channel.send("MOIN!");
+});
+
+
+
+
+client.login(token);
